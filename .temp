@@ -1,0 +1,40 @@
+/**
+ * 获得友好的URL访问
+ *
+ * @return array
+ */
+function getQueryString()
+{
+    $_SGETS = explode("/", substr($_SERVER['PATH_INFO'], 1));
+    $_SLEN = count($_SGETS);
+    $_SGET = $_GET;
+    for ($i = 0; $i < $_SLEN; $i += 2) {
+        if (! empty($_SGETS[$i]) && ! empty($_SGETS[$i + 1]))
+            $_SGET[$_SGETS[$i]] = $_SGETS[$i + 1];
+    }
+    //$_SGET['m'] = ! empty($_SGET['m']) && is_string($_SGET['m']) ? trim($_SGET['m']) . 'Action' : 'indexAction';
+    //$_SGET['a'] = ! empty($_SGET['a']) && is_string($_SGET['a']) ? trim($_SGET['a']) : 'run';
+    return $_SGET;
+}
+
+/**
+ * 生成链接URL
+ *
+ * @param array $arr            
+ * @return string
+ */
+function setUrl($arr, $urlmode = 2, $urlsuffix = '')
+{
+    $queryString = '';
+    if ($urlmode == 2) {
+        foreach ($arr as $k => $v) {
+            $queryString .= $k . '/' . $v . '/';
+        }
+    }
+    $queryString .= $urlsuffix;
+    return $queryString;
+}
+
+$_GET = getQueryString();
+
+var_dump(setUrl($_GET));

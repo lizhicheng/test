@@ -1,0 +1,9 @@
+#/appName/actionName/others... /index.php?app=$appName&action=$actionName&var=$others
+#rewrite ^/([a-z]+)/([a-z]+)?(.*)? /index.php?app=$1&action=$2&var=$3;
+rewrite /member/signup /index.php?app=member&action=signup;
+rewrite /member/login /index.php?app=member&action=login;
+rewrite /member/logout /index.php?app=member&action=logout;
+location ~ ^/(class|data|include|lang|templates)/ {
+	deny all;
+	break;
+}

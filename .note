@@ -1,0 +1,338 @@
+yii学习
+
+入口文件index.php
+入口代码Yii:createWebApplication($config)->run();
+
+Yii 继承 YiiBase
+YiiBase定义方法createWebApplication
+此方法调用createApplication创建一个CWebApplication对象
+CWebApplication继承CApplication 此类定义方法run()
+run() 调用CWebApplication中的方法processRequest()
+processRequest方法根据url运行控制器runController此方法调用
+createController创建控制器
+创建控制器时根据url加载具体的controller类文件并创建类
+controller在每个action方法中调用对应的model
+
+YiiBase通过以下方式自动加载类
+spl_autoload_register(array('YiiBase','autoload'));
+
+GitHub
+
+msysgit Git for Windows
+
+https://code.google.com/p/msysgit/downloads/list
+
+TortoiseGit的下载地址
+
+https://code.google.com/p/tortoisegit/
+
+先安装msysgit再安装tortoisegit
+settings->git->remote新建的时候填写https地址和private key
+
+Linux相关
+
+一个目录最多31998个子目录
+
+taobao开源的tfs和tengine用于分布式文件系统
+
+运行可执行文件 ./filename
+文件名前面必须加./
+
+关闭一些不必要的centos服务
+#!/bin/sh
+service acpid stop
+chkconfig --level 2345 acpid off
+service apmd stop
+chkconfig --level 2345 apmd off
+service atd stop
+chkconfig --level 2345 atd off
+service autofs stop
+chkconfig --level 2345 autofs off
+service avahi-daemon stop
+chkconfig --level 2345 avahi-daemon off
+service bluetooth stop
+chkconfig --level 2345 bluetooth off
+service cpuspeed stop
+chkconfig --level 2345 cpuspeed off
+service cups stop
+chkconfig --level 2345 cups off
+service firstboot stop
+chkconfig --level 2345 firstboot off
+service gpm stop
+chkconfig --level 2345 gpm off
+service haldaemon stop
+chkconfig --level 2345 haldaemon off 
+service hidd stop
+chkconfig --level 2345 hidd off 	
+service hplip stop
+chkconfig --level 2345 hplip off
+service ip6tables stop
+chkconfig --level 2345 ip6tables off
+service isdn stop
+chkconfig --level 2345 isdn off
+service lm_sensors stop
+chkconfig --level 2345 lm_sensors off
+service messagebus stop
+chkconfig --level 2345 messagebus off
+service nfslock stop
+chkconfig --level 2345 nfslock off
+service pcscd stop
+chkconfig --level 2345 pcscd off
+service portmap stop
+chkconfig --level 2345 portmap off
+service rpcgssd stop
+chkconfig --level 2345 rpcgssd off
+service rpcidmapd stop
+chkconfig --level 2345 rpcidmapd off
+service yum-updatesd stop
+chkconfig --level 2345 yum-updatesd off
+
+Nginx相关
+
+修改nginx.conf配置文件必须重启（非平滑）
+修改include的文件平滑重启
+
+PHP相关
+
+pdo execute执行sql 
+$sql = 'select * from `tablename` limit ? , ?';
+$q = $pdo->prepare($sql);
+$q->execute(array($offset, $num));
+传入参数自动加上单引号'导致sql语句错误
+直接写上数字 limit $offset, $num
+如果$offset $num是外部变量，先(int)强制转换下 
+
+is_callable(class::method); 如果method不是static时，php版本不同返回不一样的结果
+
+new static 和 new self   都是实例化当前类， 但是new static只有代码所在的类，就是子类如果没有重写的话那么实例化的就是父类。 而new self就是严格的当前类  
+
+You DON'T need to run mysql_real_escape_string or addslashes() or any other hacks like that with PDO, though! 
+
+I know this is off-topic, but why don't you need to add mysql_real_escape_string or addslashes() on it? I know it is protected, but how?
+
+Thanks.
+
+The way it works is entirely different. With mysql_query, you submit your query as a single string. That's how it gets sent to the MySQL server, and that's it. So you need to make sure the string is formatted perfectly, or it breaks.
+
+With prepared queries, the idea is totally different. You no longer send a single string to the MySQL server. You connect, and you send the query string without the variables in it and tell it to "prepare". That's not just some random idea that PDO and MySQLi came up with -- this is part of the MySQL server protocol. So PHP connects and says "Prepare this statement -- I'll send you the values soon."
+
+Then when you execute the query, PHP sends the values to MySQL completely separately. There's no need to add slashes to the quotes, because they aren't IN quotes anymore. They're just a flat value that doesn't need to be changed at all. MySQL never needs to plug it into the rest of the query that you prepared, making injection completely impossible.
+
+As a side-effect, MySQL has to do a lot less processing on your query too -- so not only are prepared queries safer, they're also much faster. There are no disadvantages to using them over mysql_query
+
+Zend Studio技巧
+
+设置文件编码
+window -> preference -> Work space -> 设置成utf8
+
+设置语法高亮
+window -> preference -> PHP -> Editor -> Syntax Coloring
+
+设置字体
+打开zend studio -> Window -> Preferences -> General -> Apperance -> Colors and Fonts -> 展开右边的Basic -> 点击最下面的Text Font 会弹出修改字体的框框
+
+设置自动注解
+window -> preferences -> php -> editor -> template -> new
+
+1.方法注释：
+
+缩写：funcinfo
+
+模板代码：
+
+/**
+* Enter description here…
+* @param 
+* @return int/bool/string/object/array
+*/
+
+2.类注解
+
+缩写：classinfo
+
+模板代码：
+
+/**
+* Enter description here…
+* @author lizhicheng <li_zhicheng@126.com>
+*/
+
+3.文件头部注释：
+
+缩写：fileinfo
+
+模板代码：
+
+/**
+* Enter description here…
+* @author lizhicheng <li_zhicheng@126.com>
+* @copyright Copyright &copy; 2009-2013 某某公司
+* @license http://www.xxx.com/license
+*/
+
+WebSocket
+
+首先安装nodejs 不然没法运行npm命令，也就无法安装socket.io
+从官方http://nodejs.org/download下载Linux-Binary二进制文件压缩包
+解压缩后拷贝到/usr/local目录下
+然后配置环境变量
+vi /etc/profile
+最后一行后加入
+export NODE_HOME=/usr/local/node-xxx 将xxx替换成你的内容
+export PATH=$PATH:$NODE_HOME/bin
+保存退出后执行如下命令，使刚才的配置生效
+source /etc/profile
+执行node -h命令验证设置成功
+设置成功后执行npm install socket.io安装 socket.io
+测试socket.io正常工作，在服务端编写一个test.js脚本，输入以下内容
+var io = require('/安装路径/node_modules/socket.io').listen(8001);
+io.sockets.on('connection',function(socket){
+        socket.emit('news',{hello:'world'});
+        socket.on('my other event',function(data){
+                console.log(data);
+        });
+});
+保存后运行node test.js启动
+在nginx网站目录下编辑test.socket.io.html
+<html>
+<head>
+<title>Node Socket.io Test</title>
+<!--<script src="http://cdn.socket.io/stable/socket.io.js"></script>-->
+<script src="http://ip:8001/socket.io/socket.io.js"></script>
+ 
+<script>
+  var socket = io.connect('http://ip:8001');
+  socket.on('news', function (data) {
+    alert(data);
+    console.log(data);
+    socket.emit('my other event', { my: 'data' });
+  });
+</script>
+ 
+</head>
+<body>
+<p>Test Socket.io</p>
+</body>
+</html>
+这里注意代码中注释的部分，如果引用官方CDN上的socket.io.js，就会报错:
+Uncaught TypeError: Object # has no method ‘connect’
+原因可能是socket.io.js必须和io.connect(address)中的参数address在一个服务器上
+
+jsIM
+
+var jsIM = {
+	serverIp : "",     //服务器ip
+	serverPort : "",   //端口
+	isconnect : 0,     //是否已经连接
+	islogin : 0,       //是否已经登录
+	//会员资料
+	membersData : {
+		uid : -1, 
+		nickname : "", 
+		gender : 1, 
+		face : "", 
+		vip : 0, 
+		ip : "127.0.0.1", 
+		place : 1, 
+		city : 101, 
+		actived : 0,
+		//摄像头是否打开
+		cameraOpened : 0,
+		//麦是否打开
+		micOpened : 0,
+		//音频视频流直播地址
+		steamAddress : ""
+	},
+	//连接到服务器
+	connectServer : function() {
+	},
+	//显示在线会员，实时更新
+	showOnlineMembers : function(membersData) {//membersData是一个json对象
+	  var membersObj = jsonParse(membersData);
+	  var out = '<ul>';
+	  for(k in membersObj)
+	  {
+        //alert(membersObj[k].nickname);
+        out += '<li>'+membersObj[k].nickname+'</li>';
+	  }
+	  out += '</ul>';
+	  $('#online_members').html(out);	  
+	},
+	//接收私聊信息
+	showPrivateMsg : function(userid,msg) {
+	},
+	//发送私聊信息
+	sendPrivateMsg : function(userid,msg) {
+	},
+	//接收公聊信息
+	showPublicMsg : function(msg) {
+	},
+	//发送公聊信息
+	sendPublicMsg : function(msg) {
+	}, 	
+	//本地麦开关
+	localMicSwitch : function() {
+	},
+	//本地视频开关
+	localCameraSwitch : function() {
+	},
+	//远程麦开关
+	remoteMicSwitch : function() {
+	},
+	//远程视频开关
+	remoteCameraSwitch : function() {
+	}
+};
+
+mysql相关
+
+tinyint(3) 0~2^8-1 255 1byte
+smallint(5) 0~2^16-1 65535 2byte
+mediumint(8) 0~2^24-1 16777215 3byte
+int(10) 0~2^32-1 4294967295 4byte
+bigint(20) 0~2^64-1 18446744073709551615 8byte
+
+数据库读写分离，数据表垂直拆分，水平拆分，分布式提高系统负载能力
+
+order by rand() 改成 where id in (rand ids) order by field(id,ids)提升效率
+遇到id不连续的情况，可以多生成一些rand ids，查询结果取部分
+
+大量数据分页问题
+select field1,field2,...,fieldN from table where field=? limit offset,num
+当offset较大时，查询缓慢
+优化方案一
+select id from table where field=? 取出数据$ids 根据分页大小组合成$str='id1,id2,...,idN';
+再自行select field1,field2,...,fieldN from table where id in ($str)
+优化方案二
+建立索引gpcu(user_gender,user_inplace,user_incity,user_id)
+select username from yuehui_users where user_id>=
+(select user_id from yuehui_users where user_gender='1' 
+and user_inplace='1' 
+and user_incity='101' 
+order by user_id desc 
+limit 100000,1) 
+limit 10
+
+建立索引gpclu(user_gender,user_inplace,user_incity,last_visit_time,user_id)
+索引中的每个字段（比如last_visit_time）not null 设置default值，否则会影响优化效果
+select username from yuehui_users where user_id>=
+(SELECT user_id
+FROM yuehui_users
+WHERE user_gender =  '1'
+AND user_inplace =  '1'
+AND user_incity =  '101'
+ORDER BY last_visit_time DESC 
+LIMIT 100000 , 1)
+limit 10
+
+测试机器512M内存，酷睿i3
+优化后子查询耗时0.x秒 总查询耗时0.x秒
+优化前查询耗时xx秒
+
+创建merge表
+create table table_total ()
+ENGINE=MERGE UNION=(table1,table2) INSERT_METHOD=LAST;
+子表的所有结构在总表里都要创建，包括索引
+创建merge表后，数据依然在子表里，mysql数据目录下会生成table_total.frm table_total.MRG两个文件
+新增一个子表alter table table_total union=(table1,table2,table3)
+

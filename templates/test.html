@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>test</title>
+</head>
+<body>
+{for name=loop1 data=test}
+{loop1['value']|CStringhelper::addslashesex|CStringhelper::cnSubStr:2,0}
+<br />
+{func name=CStringhelper::addslashesex para=loop1['value']}
+<br />
+{/for}
+{for name=loop2 data=contents}
+{loop2['value']['title']} {loop2['value']['title_pinyin']}
+{/for}
+{navbar}
+please fill this form
+<form action="index.php" method="post">
+<input type="hidden" name="app" value="test" />
+<input type="hidden" name="action" value="test" />
+input title here:<input type="text" name="title" />
+<input type="submit" name="submit" value="submit" />
+</form>
+
+</body>
+</html>
